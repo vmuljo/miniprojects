@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iterator>
 #include <stack>
 #include <string>
 
@@ -11,7 +10,8 @@ using namespace std;
 //Function that reverses a string the original way (O(n) time complexity)
 string reverseStringOG(string str){
     string reversed;
-    // cout << str.size();
+    
+    //Loops through from the end of the string and adds each char to the new string until iterates to the front 
     for(int i = str.size()-1; i >= 0; i--){
         reversed.push_back(str.at(i));
     }
@@ -48,5 +48,4 @@ int main(){
 
     //Prints out the reversed word using stack data structure
     cout << "Reversed Word: " << reverseStringStack(word) << endl;
-    
 }
