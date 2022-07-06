@@ -1,7 +1,7 @@
 # miniprojects
-## Collection of mini projects to advance programming skills. 
-### Involves data structures, algorithms, and basic programming techniques
+Collection of mini projects to advance programming skills. 
+Involves data structures, algorithms, and basic programming techniques
 
-Consists of:
+### Table of Contents
 - Reverse String
     - Reverses a string using a queue data structure
