@@ -4,8 +4,8 @@
 
 using namespace std;
 
-// Program to reverse a string using iterators and queue data structure.
-// Sets to look for another way to reverse a string instead of the iterating from last string element
+// Program to reverse a string using stack data structure.
+// Sets to look for another way to reverse a string instead of the iterating from last string index (although added in this program as a separate function)
 
 //Function that reverses a string the original way (O(n) time complexity)
 string reverseStringOG(string str){
