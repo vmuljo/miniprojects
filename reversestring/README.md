@@ -7,4 +7,6 @@ From using the chrono library, I calculated the runtime of each function (origna
 - Original: Runs faster with short words and gradually increases run time the longer the word is.
 - Stack: Runs slower with short words and gradually decreases run time the longer the word is.
 
+This also varies for longer strings
+
 Why?
