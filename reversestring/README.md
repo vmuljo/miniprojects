@@ -4,7 +4,9 @@ This program prompts the user to input a word and the program reverses the strin
 
 ### Observation:
 From using the chrono library, I calculated the runtime of each function (orignal and stack method). 
+
 Original: Runs faster with short words and gradually increases run time the longer the word is.
+
 Stack: Runs slower with short words and gradually decreases run time the longer the word is.
 
 Why?
