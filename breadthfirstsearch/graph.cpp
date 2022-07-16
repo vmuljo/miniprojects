@@ -28,33 +28,39 @@ Graph<V>::~Graph(){}
 // Adds vertex to map with empty edge list
 template<typename V>
 void Graph<V>::addVertex(V vert){
-    graph[vert];
+    if(!vertexExists(vert)){
+        graph[vert];
+        return;
+    }
+    else{cout << "Vertex already exists. No duplicates may be made." << endl;}
 }
 
 // Adds edge (connects 2 vertices)
 template<typename V>
 void Graph<V>::addEdge(V v1, V v2){
-    bool checkEdge = edgeExists(v1, v2);
-    bool checkVert1 = vertexExists(v1);
-    bool checkVert2 = vertexExists(v2);
-    if(checkEdge){
-        cout << "Edge already exists" << endl;
-        return;
+    if(vertexExists(v1) && vertexExists(v2)){
+        if(edgeExists(v1, v2)){
+            cout << "Edge already exists" << endl;
+        }
+        else{
+            graph[v1].push_back(v2);
+            graph[v2].push_back(v1);
+        }
     }
-    else{
-        graph[v1].push_back(v2);
-        graph[v2].push_back(v1);
-    }
+    else cout << "Invalid vertices" << endl;
 }
 
+// Removes edge from 2 vertices
 template<typename V>
 void Graph<V>::removeEdge(V v1, V v2){
     if(edgeExists(v1, v2)){
         graph[v1].erase(v2);
         graph[v2].erase(v1);
     }
+    else cout << "Invalid vertices" << endl;
 }
 
+// Removes vertex from graph after removing edges
 template<typename V>
 void Graph<V>::removeVertex(V vert){
     if(vertexExists(vert)){
@@ -63,13 +69,18 @@ void Graph<V>::removeVertex(V vert){
                 removeEdge(*it, vert);
             }
         }
+        graph.erase(vert); //Removes a vertex completely
     }
-    graph.erase(vert); //Removes a vertex completely
+    else cout << "Invalid vertex" << endl;
 }
 
+// Gets the list of edges from the vertex
 template<typename V>
-V Graph<V>::getVertex(V){
-    
+vector<V> Graph<V>::getAdjVertex(V vert){
+    if(vertexExists(vert)){
+        return graph[vert];
+    }
+    else cout << "Invalid vertex" << endl;
 }
 
 template<typename V>
@@ -83,7 +94,9 @@ bool Graph<V>::edgeExists(V v1, V v2){
         return false;
     }
     // else
-    cout << "Vertices do not exist" << endl;
+    if(!vertexExists(v1)) cout << "Invalid first vertex" << endl;
+    if(!vertexExists(v2)) cout << "Invalid second vertex" << endl;
+    return false;
 }
 
 template<typename V>
