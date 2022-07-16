@@ -169,3 +169,9 @@ Graph<int> exampleGraph(){
     test.printGraph();
     return test;
 }
+
+// int main(){
+//     Graph<int> g = exampleGraph();
+//     map<int, vector<int>> gg = g.getGraph();
+//     cout << gg[0].front() << endl;
+// }

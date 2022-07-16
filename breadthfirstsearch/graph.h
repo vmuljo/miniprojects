@@ -22,9 +22,10 @@ class Graph{
         map<V, vector<V>> getGraph();
         void printGraph();
         void printAdjVertices(V);
-        template<typename T> friend void BFSAlgo(Graph<T>, T);
-    private:
         map<V, vector<V>> graph;
+        // template<typename T> friend void BFSAlgo(Graph<T>, T);
+    private:
+        // map<V, vector<V>> graph;
 };
 
 Graph<int> exampleGraph();

@@ -8,11 +8,12 @@
 
 template<typename V>
 void BFSAlgo(Graph<V> g, V start){
-    map<V, vector<V>> graph = g.getGraph();
-    map<V,pair<V, int>> search;
+    map<V, vector<V>> graph = g.graph;
+    
+    map<V, pair<V, int>> search;
 
     for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
-        search[*it] = make_pair(0,INFINITY);
+        search[it->first] = make_pair(0,INFINITY);
     }
     queue<V>* bfsq = new queue<V>;
     bfsq->push(start);
@@ -31,9 +32,9 @@ void BFSAlgo(Graph<V> g, V start){
     }
 
     for(typename map<V, pair<V, int>>::iterator it = search.begin(); it != search.end(); ++it){
-        cout << "Vertex: " << search[*it] << endl;
-        cout << "Predecessor: " << search[*it].first << endl;
-        cout << "Distance from start vertex: " << search[*it].second << endl;
+        cout << "Vertex: " << it->first << endl;
+        cout << "Predecessor: " << (it->second).first << endl;
+        cout << "Distance from start vertex: " << (it->second).second << endl;
     }
 
 }
