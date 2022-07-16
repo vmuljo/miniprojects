@@ -19,10 +19,13 @@ class Graph{
         vector<V> getAdjVertex(V);
         bool edgeExists(V, V); //Check if edge exists between two vertices. Just check one since the code should already add to both
         bool vertexExists(V);
+        map<V, vector<V>> getGraph();
         void printGraph();
         void printAdjVertices(V);
+        template<typename T> friend void BFSAlgo(Graph<T>, T);
     private:
         map<V, vector<V>> graph;
 };
 
+Graph<int> exampleGraph();
 #endif

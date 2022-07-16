@@ -106,12 +106,15 @@ bool Graph<V>::vertexExists(V vert){
     return true; //Else, vertex does exist and return true.
 }
 
+template<typename V>
+map<V, vector<V>> Graph<V>::getGraph(){return graph;}
+
 // Prints entire graph with vertices and edges
 template<typename V>
 void Graph<V>::printGraph(){
     for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
         cout << "Vertex node: " << it->first << endl;
-        cout << "List of edges: " << endl;
+        cout << "List of adjacent vertices: " << endl;
         for(typename vector<V>::iterator itt = (it->second).begin(); itt != (it->second).end(); ++itt){
             cout << *itt << " ";
         }
@@ -119,30 +122,50 @@ void Graph<V>::printGraph(){
     }
 }
 
+// Prints list of adjacent vertices associated with a vertex
 template<typename V>
 void Graph<V>::printAdjVertices(V vert){
+    cout << "Vertex: " << vert << endl;
+    cout << "List of adjacent vertices: ";
     for(typename vector<V>::iterator it = graph[vert].begin(); it != graph[vert].end(); ++it){
-        cout << "Vertex: " << vert << endl;
-        cout << "List of edges: " << *it;
+        cout << *it << " ";
     }
     cout << endl;
 }
 
-
-int main(){
+Graph<int> exampleGraph(){
     // graph test;
-    Graph<int> test(1);
-    test.addVertex(1); //Should result in error as vertex already exists
-    test.addVertex(2);
+    Graph<int> test(0);
+    // test.addVertex(1); //Should result in error as vertex already exists
+    // test.addVertex(2);
 
+    for(int i = 1; i<8; i++){
+        test.addVertex(i);
+    }
+
+    test.addEdge(0,2);
+    test.addEdge(0,4);
     test.addEdge(1,2);
-    
-    // test[1].push_back(10);
-    // test[2].push_back(11);
+    test.addEdge(1,7);
+    test.addEdge(2,1); // Should print edge exists already
+    test.addEdge(2,3);
+    test.addEdge(2,4);
+    test.addEdge(2,0); //alr
+    test.addEdge(2,6);
+    test.addEdge(3,2); // Should print edge exists alr
+    test.addEdge(3,5);
+    test.addEdge(4,0); //edge alr
+    test.addEdge(4,2); //alr
+    test.addEdge(4,5);
+    test.addEdge(5,4); //edge alr
+    test.addEdge(5,3); //alr
+    test.addEdge(5,6);
+    test.addEdge(6,5); //alr
+    test.addEdge(6,7);
+    test.addEdge(6,2); //alr
+    test.addEdge(7,1); //alr
+    test.addEdge(7,6); //alr
 
-    // for(int i = 0; i<10; i++){
-    //     test[1].push_back(i);
-    // }
-    test.printAdjVertices(1);
     test.printGraph();
+    return test;
 }
