@@ -1,6 +1,5 @@
 #include "graph.h"
 
-using graphType = map<int, vector<int>>;
 // This basically creates the graph class
 // To add a vertex, simply create a new key with a pushback on the vector with the value being the last node. This connects the two vertices and sets it as the edge
 // template<typename V>
@@ -64,7 +63,7 @@ void Graph<V>::removeEdge(V v1, V v2){
 template<typename V>
 void Graph<V>::removeVertex(V vert){
     if(vertexExists(vert)){
-        for(graphType::iterator it = graph.begin(); it != graph.end(); ++it){
+        for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
             if(edgeExists(*it, vert)){
                 removeEdge(*it, vert);
             }
@@ -83,10 +82,11 @@ vector<V> Graph<V>::getAdjVertex(V vert){
     else cout << "Invalid vertex" << endl;
 }
 
-template<typename V>
+// Check if edge exists between two vertices
+template <typename V>
 bool Graph<V>::edgeExists(V v1, V v2){
     if(vertexExists(v1) && vertexExists(v2)){
-        for(vector<V>::iterator it = graph[v1].begin(); it != graph[v1].end(); ++it){
+        for(typename vector<V>::iterator it = graph[v1].begin(); it != graph[v1].end(); ++it){
             if(*it == v2){
                 return true;
             }
@@ -99,32 +99,50 @@ bool Graph<V>::edgeExists(V v1, V v2){
     return false;
 }
 
+// Checks if vertex already exists in graph
 template<typename V>
 bool Graph<V>::vertexExists(V vert){
     if(graph.find(vert) == graph.end()) return false; //if vertex is not found while iterating thru map, vert does not exist
     return true; //Else, vertex does exist and return true.
 }
 
-
-int main(){
-    // graph test;
-    Graph<int> test;
-    test.addVertex(1);
-    test.addEdge()
-    
-    test[1].push_back(10);
-    test[2].push_back(11);
-
-    for(int i = 0; i<10; i++){
-        test[1].push_back(i);
-    }
-
-    for(graph::iterator it = test.begin(); it != test.end(); ++it){
+// Prints entire graph with vertices and edges
+template<typename V>
+void Graph<V>::printGraph(){
+    for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
         cout << "Vertex node: " << it->first << endl;
         cout << "List of edges: " << endl;
-        for(vector<int>::iterator itt = (it->second).begin(); itt != (it->second).end(); ++itt){
+        for(typename vector<V>::iterator itt = (it->second).begin(); itt != (it->second).end(); ++itt){
             cout << *itt << " ";
         }
         cout << endl;
     }
+}
+
+template<typename V>
+void Graph<V>::printAdjVertices(V vert){
+    for(typename vector<V>::iterator it = graph[vert].begin(); it != graph[vert].end(); ++it){
+        cout << "Vertex: " << vert << endl;
+        cout << "List of edges: " << *it;
+    }
+    cout << endl;
+}
+
+
+int main(){
+    // graph test;
+    Graph<int> test(1);
+    test.addVertex(1); //Should result in error as vertex already exists
+    test.addVertex(2);
+
+    test.addEdge(1,2);
+    
+    // test[1].push_back(10);
+    // test[2].push_back(11);
+
+    // for(int i = 0; i<10; i++){
+    //     test[1].push_back(i);
+    // }
+    test.printAdjVertices(1);
+    test.printGraph();
 }
