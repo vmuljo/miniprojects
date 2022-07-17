@@ -166,7 +166,7 @@ Graph<int> exampleGraph(){
     test.addEdge(7,1); //alr
     test.addEdge(7,6); //alr
 
-    test.printGraph();
+    // test.printGraph();
     return test;
 }
 
