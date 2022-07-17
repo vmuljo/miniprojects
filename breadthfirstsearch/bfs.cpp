@@ -10,38 +10,37 @@
 template<typename V>
 void BFSAlgo(Graph<V> g, V &start){
     map<V, vector<V>> graph = g.graph;
-    map<V, pair<V*, int>> search;
+    map<V, pair<bool, int>> search;
+    map<V, V> pred; // Predecessor
 
+    // Sets each vertex to false and depth of -1 to indicate not visited yet and start of search
     for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
-        search[it->first] = make_pair(nullptr,-1);
-        cout << &(it->first) << endl;
+        search[it->first] = make_pair(false,-1);
     }
     queue<V>* bfsq = new queue<V>;
     bfsq->push(start);
+    search[start].first = true; //sets first vertex to true to indicate visited vertex
     search[start].second = 0; 
-    V* currVertex;
+    pred[start] = NULL;
+    V currVertex;
     while(!bfsq->empty()){
-        currVertex = &(bfsq->front());
-        cout << "Ver: " << *currVertex << endl;
+        currVertex = bfsq->front();
         bfsq->pop();
-
-        for(typename vector<V>::iterator it = graph[*currVertex].begin(); it != graph[*currVertex].end(); ++it){
-            cout << "AH: " << (search[*it]).first << endl;
-            if(search[*it].first == nullptr){
-                cout << "In" << endl;
-                bfsq->push(*it);
-                search[*it].first = currVertex;
-                cout << "Ver 1: " << *currVertex << endl;
-                search[*it].second = search[*currVertex].second + 1;
+        for(typename vector<V>::iterator it = graph[currVertex].begin(); it != graph[currVertex].end(); ++it){
+            if(search[*it].first == false){ //want to check if in list or not
+                bfsq->push(*it); // Adds each adj vertex to queue
+                search[*it].first = true; //Sets as true to indicate the node has been visited
+                search[*it].second = search[currVertex].second + 1;
+                pred[*it] = currVertex;
             } 
         }
     }
 
     delete bfsq;
 
-    for(typename map<V, pair<V*, int>>::iterator it = search.begin(); it != search.end(); ++it){
+    for(typename map<V, pair<bool, int>>::iterator it = search.begin(); it != search.end(); ++it){
         cout << "Vertex: " << it->first << endl;
-        cout << "Predecessor: " << *(it->second).first << endl;
+        cout << "Predecessor: " << pred[it->first] << endl;
         cout << "Distance from start vertex: " << (it->second).second << endl;
     }
 
@@ -52,6 +51,4 @@ int main(){
     map<int, vector<int>>::iterator it = g.graph.begin();
     int start = it->first;
     BFSAlgo(g, start);
-    // search[1] = make_pair(NULL, 0);
-    // search[0] = make_pair(NULL, 0);
 }
