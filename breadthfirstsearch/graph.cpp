@@ -69,7 +69,7 @@ void Graph<V>::removeVertex(V vert){
     if(vertexExists(vert) != graph.end()){
         typename vector<V>::iterator vert_in_edge;
         // Loops through each vertex in the list and checks if there exists an edge with vertex. Remove edge if so.
-        for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
+        for(typename unordered_map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
             vert_in_edge = edgeExists(vert, it->first);
             if(vert_in_edge != graph[vert].end()){ //checks if key at iterator (vertex) exists in the list of vertices in vert
                 graph[it->first].erase(vert_in_edge);
@@ -99,8 +99,8 @@ typename vector<V>::iterator Graph<V>::edgeExists(V v1, V v2){
 
 // Checks if vertex already exists in graph
 template<typename V>
-typename map<V, vector<V>>::iterator Graph<V>::vertexExists(V vert){
-    typename map<V, vector<V>>::iterator it = graph.find(vert);
+typename unordered_map<V, vector<V>>::iterator Graph<V>::vertexExists(V vert){
+    typename unordered_map<V, vector<V>>::iterator it = graph.find(vert);
     if(graph.find(vert) == graph.end()) return graph.end(); //if vertex is not found while iterating thru map, vert does not exist
     return it; //Else, vertex does exist and return true.
 }
@@ -114,14 +114,14 @@ vector<V> Graph<V>::getAdjVertex(V vert){
 }
 
 template<typename V>
-map<V, vector<V>>& Graph<V>::getGraph(){
+unordered_map<V, vector<V>>& Graph<V>::getGraph(){
     return graph;
 }
 
 // Prints entire graph with vertices and edges
 template<typename V>
 void Graph<V>::printGraph(){
-    for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
+    for(typename unordered_map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
         cout << "Vertex node: " << it->first << endl;
         cout << "List of adjacent vertices: " << endl;
         for(typename vector<V>::iterator itt = (it->second).begin(); itt != (it->second).end(); ++itt){
@@ -185,7 +185,7 @@ void print(string p){
 
 int main(){
     Graph<int> g = exampleGraph();
-    map<int, vector<int>> gg = g.getGraph();
+    unordered_map<int, vector<int>> gg = g.getGraph();
     g.printGraph();
 
     // vector<int> adj2 = g.getAdjVertex(2);
@@ -195,7 +195,7 @@ int main(){
     // }
     // print("Printing adj2 using function class: ");
     // g.printAdjVertices(2);
-    map<int, vector<int>>::iterator vert2 = g.vertexExists(82);
+    unordered_map<int, vector<int>>::iterator vert2 = g.vertexExists(82);
     // vector<int>::iterator edge02 = g.edgeExists(8, 15);
     
     if(vert2 == g.graph.end()) cout << "tuff" << endl;

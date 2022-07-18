@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <unordered_map>
 using namespace std;
 
 template<typename V>
@@ -18,11 +19,11 @@ class Graph{
         void removeEdge(V, V); //(Vertex 1, vertex 2) so the edge between the two vertices are removed. To do this, find the first vertex and erase
         vector<V> getAdjVertex(V);
         typename vector<V>::iterator edgeExists(V, V); //Check if edge exists between two vertices. Just check one since the code should already add to both
-        typename map<V, vector<V>>::iterator vertexExists(V);
-        map<V, vector<V>>& getGraph();
+        typename unordered_map<V, vector<V>>::iterator vertexExists(V);
+        unordered_map<V, vector<V>>& getGraph();
         void printGraph();
         void printAdjVertices(V);
-        map<V, vector<V>> graph;
+        unordered_map<V, vector<V>> graph;
         // template<typename T> friend void BFSAlgo(Graph<T>, T);
     private:
         // map<V, vector<V>> graph;

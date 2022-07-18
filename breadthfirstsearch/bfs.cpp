@@ -9,9 +9,9 @@
 
 template<typename V>
 void BFSAlgo(Graph<V> g, V &start){
-    map<V, vector<V>> graph = g.graph;
-    map<V, pair<bool, int>> search;
-    map<V, V> pred; // Predecessor
+    unordered_map<V, vector<V>> graph = g.graph;
+    unordered_map<V, pair<bool, int>> search;
+    unordered_map<V, V> pred; // Predecessor
 
     // Sets each vertex to false and depth of -1 to indicate not visited yet and start of search
     for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
