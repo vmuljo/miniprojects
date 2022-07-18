@@ -48,7 +48,10 @@ void BFSAlgo(Graph<V> g, V &start){
 
 int main(){
     Graph<int> g = exampleGraph();
-    map<int, vector<int>>::iterator it = g.graph.begin();
+    // vector<int> t = g.getAdjVertex(0);
+    map<int, vector<int>> test = g.graph;
+    g.removeVertex(2);
+    map<int, vector<int>>::iterator it = g.getGraph().begin();
     int start = it->first;
     BFSAlgo(g, start);
 }

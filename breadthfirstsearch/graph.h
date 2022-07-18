@@ -1,5 +1,5 @@
-#ifndef GRAPH
-#define GRAPH
+#ifndef GRAPH_H
+#define GRAPH_H
 
 #include <iostream>
 #include <vector>
@@ -17,8 +17,8 @@ class Graph{
         void removeVertex(V);
         void removeEdge(V, V); //(Vertex 1, vertex 2) so the edge between the two vertices are removed. To do this, find the first vertex and erase
         vector<V> getAdjVertex(V);
-        bool edgeExists(V, V); //Check if edge exists between two vertices. Just check one since the code should already add to both
-        bool vertexExists(V);
+        typename vector<V>::iterator edgeExists(V, V); //Check if edge exists between two vertices. Just check one since the code should already add to both
+        typename map<V, vector<V>>::iterator vertexExists(V);
         map<V, vector<V>> getGraph();
         void printGraph();
         void printAdjVertices(V);

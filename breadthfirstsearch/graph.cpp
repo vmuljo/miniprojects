@@ -27,7 +27,7 @@ Graph<V>::~Graph(){}
 // Adds vertex to map with empty edge list
 template<typename V>
 void Graph<V>::addVertex(V vert){
-    if(!vertexExists(vert)){
+    if(vertexExists(vert) == graph.end()){ // Checks if vertex does not exist within graph
         graph[vert];
         return;
     }
@@ -37,8 +37,8 @@ void Graph<V>::addVertex(V vert){
 // Adds edge (connects 2 vertices)
 template<typename V>
 void Graph<V>::addEdge(V v1, V v2){
-    if(vertexExists(v1) && vertexExists(v2)){
-        if(edgeExists(v1, v2)){
+    if((vertexExists(v1) != graph.end()) && (vertexExists(v2) != graph.end())){ // Checks if both vertices are valid
+        if(edgeExists(v1, v2) != graph[v1].end()){ // Checks if an edge already established between vertices
             cout << "Edge already exists" << endl;
         }
         else{
@@ -51,63 +51,78 @@ void Graph<V>::addEdge(V v1, V v2){
 
 // Removes edge from 2 vertices
 template<typename V>
-void Graph<V>::removeEdge(V v1, V v2){
-    if(edgeExists(v1, v2)){
-        graph[v1].erase(v2);
-        graph[v2].erase(v1);
+void Graph<V>::removeEdge(V v1, V v2){ //iterator to whatever is v1 and v2 is vert specified in remove
+    // cout << "Gets in removeEdge" << endl;
+    typename vector<V>::iterator edge_v1 = edgeExists(v1, v2);
+    // cout << "Passes v1" << endl;
+    typename vector<V>::iterator edge_v2 = edgeExists(v2, v1);
+    // cout << "Passes v2" << endl;
+    cout << *edge_v1 << ", " << *edge_v2 << endl;
+    if(edge_v1 != graph[v1].end()){
+        // cout << "Passes if check" << endl;
+        graph[v1].erase(edge_v2);
+        printAdjVertices(v1);
+        // cout << "Passes erase v2" << endl;
+        graph[v2].erase(edge_v1);
+        // cout << "Passes erase v1" << endl;
     }
     else cout << "Invalid vertices" << endl;
+    // cout << "test" << endl;
 }
 
 // Removes vertex from graph after removing edges
 template<typename V>
 void Graph<V>::removeVertex(V vert){
-    if(vertexExists(vert)){
+    if(vertexExists(vert) != graph.end()){
+        // Loops through each vertex in the list and checks if there exists an edge with vertex. Remove edge if so.
         for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
-            if(edgeExists(*it, vert)){
-                removeEdge(*it, vert);
+            if(edgeExists(it->first, vert) != graph[it->first].end()){
+                cout << "comes here" << endl;
+                removeEdge(it->first, vert);
             }
         }
-        graph.erase(vert); //Removes a vertex completely
-    }
-    else cout << "Invalid vertex" << endl;
-}
-
-// Gets the list of edges from the vertex
-template<typename V>
-vector<V> Graph<V>::getAdjVertex(V vert){
-    if(vertexExists(vert)){
-        return graph[vert];
+        graph.erase(vertexExists(vert)); //Removes a vertex completely
     }
     else cout << "Invalid vertex" << endl;
 }
 
 // Check if edge exists between two vertices
 template <typename V>
-bool Graph<V>::edgeExists(V v1, V v2){
-    if(vertexExists(v1) && vertexExists(v2)){
-        for(typename vector<V>::iterator it = graph[v1].begin(); it != graph[v1].end(); ++it){
-            if(*it == v2){
-                return true;
+typename vector<V>::iterator Graph<V>::edgeExists(V v1, V v2){
+    if((vertexExists(v1) != graph.end()) && (vertexExists(v2) != graph.end())){
+        for(typename vector<V>::iterator it = graph[v2].begin(); it != graph[v2].end(); ++it){
+            if(*it == v1){
+                return it;
             }
         }
-        return false;
+        return graph[v1].end();
     }
     // else
-    if(!vertexExists(v1)) cout << "Invalid first vertex" << endl;
-    if(!vertexExists(v2)) cout << "Invalid second vertex" << endl;
-    return false;
+    if(vertexExists(v1) == graph.end()) cout << "Invalid first vertex" << endl;
+    if(vertexExists(v2) == graph.end()) cout << "Invalid second vertex" << endl;
+    return graph[v1].end();
 }
 
 // Checks if vertex already exists in graph
 template<typename V>
-bool Graph<V>::vertexExists(V vert){
-    if(graph.find(vert) == graph.end()) return false; //if vertex is not found while iterating thru map, vert does not exist
-    return true; //Else, vertex does exist and return true.
+typename map<V, vector<V>>::iterator Graph<V>::vertexExists(V vert){
+    typename map<V, vector<V>>::iterator it = graph.find(vert);
+    if(graph.find(vert) == graph.end()) return graph.end(); //if vertex is not found while iterating thru map, vert does not exist
+    return it; //Else, vertex does exist and return true.
+}
+// Gets the list of edges from the vertex
+template<typename V>
+vector<V> Graph<V>::getAdjVertex(V vert){
+    if(vertexExists(vert) != graph.end()){
+        return graph[vert];
+    }
+    else cout << "Invalid vertex" << endl;
 }
 
 template<typename V>
-map<V, vector<V>> Graph<V>::getGraph(){return graph;}
+map<V, vector<V>> Graph<V>::getGraph(){
+    return graph;
+}
 
 // Prints entire graph with vertices and edges
 template<typename V>
@@ -170,8 +185,29 @@ Graph<int> exampleGraph(){
     return test;
 }
 
-// int main(){
-//     Graph<int> g = exampleGraph();
-//     map<int, vector<int>> gg = g.getGraph();
-//     cout << gg[0].front() << endl;
-// }
+void print(string p){
+    cout << p << endl;
+}
+
+int main(){
+    Graph<int> g = exampleGraph();
+    map<int, vector<int>> gg = g.getGraph();
+    g.printGraph();
+
+    // vector<int> adj2 = g.getAdjVertex(2);
+    // print("Printing adj2: ");
+    // for(vector<int>::iterator it = adj2.begin(); it != adj2.end(); ++it){
+    //     cout << *it << " ";
+    // }
+    // print("Printing adj2 using function class: ");
+    // g.printAdjVertices(2);
+
+    // vector<int>::iterator edge02 = g.edgeExists(0, 1);
+    // cout << *edge02 << endl;
+    // map<int, vector<int>>::iterator vert2 = g.vertexExists(2);
+    // cout << vert2->first << endl;
+    
+    cout << "Deleted Vertex 2"<< endl;
+    g.removeVertex(2);
+    g.printGraph();
+}
