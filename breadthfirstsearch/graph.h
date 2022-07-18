@@ -19,7 +19,7 @@ class Graph{
         vector<V> getAdjVertex(V);
         typename vector<V>::iterator edgeExists(V, V); //Check if edge exists between two vertices. Just check one since the code should already add to both
         typename map<V, vector<V>>::iterator vertexExists(V);
-        map<V, vector<V>> getGraph();
+        map<V, vector<V>>& getGraph();
         void printGraph();
         void printAdjVertices(V);
         map<V, vector<V>> graph;
