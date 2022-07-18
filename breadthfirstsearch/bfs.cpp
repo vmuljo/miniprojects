@@ -14,13 +14,12 @@ void BFSAlgo(Graph<V> g, V &start){
     unordered_map<V, V> pred; // Predecessor
 
     // Sets each vertex to false and depth of -1 to indicate not visited yet and start of search
-    for(typename map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
+    for(typename unordered_map<V, vector<V>>::iterator it = graph.begin(); it != graph.end(); ++it){
         search[it->first] = make_pair(false,-1);
     }
     queue<V>* bfsq = new queue<V>;
     bfsq->push(start);
-    search[start].first = true; //sets first vertex to true to indicate visited vertex
-    search[start].second = 0; 
+    search[start] = make_pair(true, 0); //sets first vertex to true to indicate visited vertex
     pred[start] = NULL;
     V currVertex;
     while(!bfsq->empty()){
@@ -38,7 +37,7 @@ void BFSAlgo(Graph<V> g, V &start){
 
     delete bfsq;
 
-    for(typename map<V, pair<bool, int>>::iterator it = search.begin(); it != search.end(); ++it){
+    for(typename unordered_map<V, pair<bool, int>>::iterator it = search.begin(); it != search.end(); ++it){
         cout << "Vertex: " << it->first << endl;
         cout << "Predecessor: " << pred[it->first] << endl;
         cout << "Distance from start vertex: " << (it->second).second << endl;
@@ -49,9 +48,9 @@ void BFSAlgo(Graph<V> g, V &start){
 int main(){
     Graph<int> g = exampleGraph();
     // vector<int> t = g.getAdjVertex(0);
-    map<int, vector<int>> test = g.graph;
-    g.removeVertex(2);
-    map<int, vector<int>>::iterator it = g.getGraph().begin();
+    unordered_map<int, vector<int>> test = g.graph;
+    // g.removeVertex(2);
+    unordered_map<int, vector<int>>::iterator it = g.graph.begin();
     int start = it->first;
     BFSAlgo(g, start);
 }
