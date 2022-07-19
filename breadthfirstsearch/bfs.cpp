@@ -18,9 +18,9 @@ void BFSAlgo(Graph<V> g, V &start){
     }
     
     queue<V>* bfsq = new queue<V>; // Initializes queue for BFS
-    bfsq->push(start); // Adds the start vertex set by user as first vertex to search
+    bfsq->push(start); 
     search[start] = make_pair(true, 0); //sets first vertex to true to indicate visited vertex with distance of 0
-    pred[start] = NULL;
+    pred[start] = NULL; // No predecessor at start vertex
     V currVertex; // Initializes current vertex in the search
 
     // While the BFS queue is not empty (should never be empty until the last vertex is completed)
@@ -52,10 +52,7 @@ void BFSAlgo(Graph<V> g, V &start){
 
 int main(){
     Graph<int> g = exampleGraph();
-    // vector<int> t = g.getAdjVertex(0);
     unordered_map<int, vector<int>> test = g.graph;
-    // g.printGraph();
-    // unordered_map<int, vector<int>>::iterator it = g.graph.begin();
     unordered_map<int, vector<int>>::iterator itt = g.graph.find(0);
     int start = itt->first;
     BFSAlgo(g, start);
